@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block main_title %}
+
+{{user.username}} || register ||
+  
+{% endblock main_title %}
+
+
+{% block main_body %}
+<style>
+    html,
+body {
+  height: 100%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: -webkit-box;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+label{
+  text-transform: capitalize;
+}
+</style>
+
+  <body class="">
+    {% for message in messages %}
+<span class="text-danger">{{message}}</span>
+    {% endfor %}
+  
+    <form class="form-signin container" action="/register" method="POST">
+      {% comment %} <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> {% endcomment %}
+      <h1 class="h3 mb-3 font-weight-normal text-center fw-bold text-primary">BLOG-BITA</h1>
+      {% comment %} <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1> {% endcomment %}
+        {% csrf_token %}
+      <label for="inputEmail" class="sr-only">username</label>
+      <input type="text" id="inputEmail" class="form-control" placeholder="Username" name="username" required >
+  
+      <label for="inputEmail" class="sr-only">Email address</label>
+      <input type="email" id="inputEmail" class="form-control" name="email" required placeholder="Email Address" required >
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" name="password" class="form-control" required  placeholder="Password" required>
+      <label for="inputPassword" class="sr-only">repeat Password</label>
+      <input type="password" id="inputPassword" class="form-control" name="password2" required   placeholder="Repear Password" required>
+
+      <button class="btn btn btn-outline-primary btn-block" type="submit">Sign up</button>
+      <a   class="btn btn-link" href="/login">login</a>
+      </form>
+</body>
+  
+    {% endblock main_body %}

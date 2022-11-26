@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block main_title %}
+
+{{user.username}} || PROFILE VIEW ||
+  
+{% endblock main_title %}
+
+
+{% block main_body %}
+{% for message in messages %}
+{% endfor %}  
+
+<style>
+  img.rounded-circle{
+    object-fit:cover;
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
+  }
+
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    {% comment %} <a class="navbar-brand" href="#">BDRAND</a> {% endcomment %}
+    <a class="fw-bold navbar-brand " style="color:#0a4275;">BLOG-BITA</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent" >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center ">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">HOME</a>
+        </li>
+        
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/post">+POSTS</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">PROFILE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/logout" tabindex="-1" >LOGOUT </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link " href="/login" tabindex="-1" >LOGIN </a>
+          </li>
+
+        {% endif %}
+
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container">
+  <div class="row p-5">
+    <div class="col-md-6 img">
+      <img src="{{user.udp.url}}"  alt="" class="rounded-circle" height='200' width='350'>
+    </div>
+    <div class="col-md-6 details">
+      <blockquote>
+        <h5>{{user.username}}</h5>
+  
+      </blockquote>
+      <p>Email:{{user.email}}</p> 
+      <p>First Name:{{user.first_name}}</p> 
+      <p>Last Name:{{user.last_name}}</p> 
+      <p>About:{{user.bio}}</p> 
+      <p>Joined Date:{{user.date_joined}}</p> 
+
+    </div>
+  </div>
+</div>
+
+
+
+{% comment %} post list {% endcomment %}
+<div class="album py-5 bg-light">
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      
+      {% for i in post %}
+      <div class="col card">
+        <!-- <div class="card shadow-sm">
+          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg> -->
+
+          <img src="{{i.postpic.url}}" class="card-img-top pt-1" >
+
+          <div class="card-body">
+            <p class="card-text">{{i.content|truncatewords:30}}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a type="button" href='/readmore/{{i.id}}' class="btn btn-sm btn-outline-secondary">View</a>
+              </div>
+              <small class="text-muted">{{i.date}}  </small>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<section class="">
+  <!-- Footer -->
+  <footer class="text-center text-white" style="background-color: #0a4275;">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: CTA -->
+      <section class="">
+        <p class="d-flex justify-content-center align-items-center">
+          <span class="me-3">Register for free</span>
+          <a type="button" href='/register' class="btn btn-outline-light btn-rounded">
+            Sign up!
+          </a>
+        </p>
+      </section>
+      <!-- Section: CTA -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright:
+      <a class="text-white" href="https://blog-bita.heroku.com/">blog-bita.heroku.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+</section>
+
+
+  <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    
+{% endblock main_body %}

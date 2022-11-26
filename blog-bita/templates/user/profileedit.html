@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block main_title %}
+
+{{user.username}} || PROFILE EDIT ||
+  
+{% endblock main_title %}
+
+
+{% block main_body %}
+<br>
+<br>
+
+<center>
+  <h3>Welcome! <b>{{request.user}}</b> Update Your Profile</h3>
+</center>
+<form class="container" action="profileedit" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <span class="text-danger">{{message}}</span>
+
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">First Name</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter First Name" name="fname" value="{{request.user.first_name}}">
+  </div>
+   
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Last Name</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Last Name" name="lname" value="{{request.user.last_name}}">
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Email</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Enter Email" name="email" value="{{request.user.email}}">
+  </div>
+   
+  
+
+  
+
+  <div class="mb-3" style="height:10%; width: 20%;">
+    <label for="exampleFormControlInput1" class="form-label"></label>
+    <img src="{{request.user.udp.url}}"  class="img-fluid" id="prev" alt="dp preview">
+
+  </div>
+
+  <!-- <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Content Related Image</label>
+    <input type="file" class="form-control" id="exampleFormControlInput1" placeholder="chooce image" name="image">
+  </div> -->
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Preview image</label>
+    <input type="file" class="form-control" id="exampleFormControlInput1" placeholder="Chooce image" name="image" onchange="pre(event)" required>
+  </div>
+  
+
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">About</label>
+    <textarea type="tex" class="form-control" id="exampleFormControlInput1" placeholder="Write Your Content" name="bio" value="{{request.user.bio}}" >{{request.user.bio}}</textarea>
+  </div>
+  
+  
+  
+  <!-- {{context.value}} -->
+  
+  <div class="">
+    <!-- <button class="btn btn-primary" type="button">Button</button> -->
+    <button class="btn btn-outline-primary" type="submit">submit</button>
+     <a   class="btn btn-link" href="/profile">profile</a>
+    <a   class="btn btn-link" href="/">Home</a>
+
+  </div>
+</form>
+<br>
+<br>
+<br>
+
+{% block main_script %}
+
+<script type='text/javascript'>
+  function pre(event) 
+  {
+   var reader = new FileReader();
+   reader.onload = function()
+   {
+    var output = document.getElementById('prev');
+    output.src = reader.result;
+   }
+   reader.readAsDataURL(event.target.files[0]);
+  }
+  </script>
+
+{% endblock main_script %}
+
+
+{% endblock main_body %}

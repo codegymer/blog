@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block main_title %}
+
+{{user.username}} || HOME ||
+  
+{% endblock main_title %}
+
+
+{% block main_body %}
+{% for message in messages %}
+{% endfor %}  
+
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    {% comment %} <a class="navbar-brand" href="#">BDRAND</a> {% endcomment %}
+    <a class="fw-bold navbar-brand " style="color:#0a4275;">BLOG-BITA</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent" >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center ">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">HOME</a>
+        </li>
+        
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="/post">+POSTS</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">PROFILE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="/logout" tabindex="-1" >LOGOUT </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link " href="/login" tabindex="-1" >LOGIN </a>
+          </li>
+
+        {% endif %}
+
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+
+
+
+<section class="py-5 text-center container">
+  <div class="row py-lg-5">
+    <div class="col-lg-6 col-md-8 mx-auto">
+      {% comment %} <h1 class="fw-light">Good Morning!</h1>
+      <p class="lead text-muted"> "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart." -Helen Keller</p>
+      <p> {% endcomment %}
+        <div class="text-center mb-4 pb-2">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-quotes/bulb.webp"
+            alt="Bulb" width="100">
+        </div>
+
+        <figure class="text-center mb-0">
+          <blockquote class="blockquote">
+            <p class="pb-3">
+              <i class="fas fa-quote-left fa-xs text-primary"></i>
+              <span class="lead font-italic">Many of life's failures are people who did not realize how
+                close they were to success when they gave up.</span>
+              <i class="fas fa-quote-right fa-xs text-primary"></i>
+            </p>
+          </blockquote>
+          <figcaption class="blockquote-footer mb-0">
+            Thomas Edison
+          </figcaption>
+        </figure>
+
+      </div>
+    </div>
+        <a href="/post" class="btn btn-primary my-2">Create Your Own Post</a>
+        <a href="/profile" class="btn btn-secondary my-2">Your Profile</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="album py-5 bg-light">
+  <div class="container">
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      
+      {% for i in op %}
+      <div class="col card">
+
+
+          <img src="{{i.postpic.url}}" class="card-img-top pt-1" >
+
+          <div class="card-body">
+            <h4 class="cart-text">{{i.title}}</h4>
+            <p class="card-text">{{i.content|truncatewords:30 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a type="button" href='/readmore/{{i.id}}' class="btn btn-sm btn-outline-secondary">View</a>
+                {% comment %} <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> {% endcomment %}
+              </div>
+              <small class="text-muted">{{i.date}}</small>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-danger container-fluid" role="alert">
+          Currently Data Not Available <a href="/post" class="alert-link">POST YOUR ARTICLE</a>. Give it a click if you like.
+        </div>
+        {% endfor %}
+      </div>
+
+      
+
+    </div>
+  </div>
+</div>
+
+</main>
+
+<section class="">
+  <!-- Footer -->
+  <footer class="text-center text-white" style="background-color: #0a4275;">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: CTA -->
+      <section class="">
+        <p class="d-flex justify-content-center align-items-center">
+          <span class="me-3">Register for free</span>
+          <a type="button" href='/register' class="btn btn-outline-light btn-rounded">
+            Sign up!
+          </a>
+        </p>
+      </section>
+      <!-- Section: CTA -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright:
+      <a class="text-white" href="https://blog-bita.heroku.com/">blog-bita.heroku.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+</section>
+
+
+  <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    
+{% endblock main_body %}

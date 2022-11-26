@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block main_title %}
+
+{{user.username}} || POST ||
+  
+{% endblock main_title %}
+
+
+{% block main_body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="fw-bold navbar-brand " style="color:#0a4275;">BLOG-BITA</a>
+
+    {% comment %} <a class="navbar-brand" href="#">BDRAND</a> {% endcomment %}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent" >
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center ">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/allpost">ALLPOSTS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/profile">PROFILE</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link " href="/logout" tabindex="-1" >LOGOUT </a>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+
+
+{% for message in messages %}
+{% endfor %} 
+<br>
+<br>
+<h3 class='text-center'>Hello! <b> {{request.user}} </b> Please Upload Your Post...</h3>
+<form class="container" action="post" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <span class="text-danger">{{message}}</span>
+
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Title</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" required placeholder="Enter Title" name="title">
+  </div>
+   
+  
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Highlight</label>
+    <textarea type="tex" class="form-control" id="exampleFormControlInput1" required placeholder="Write Your Highlight Content  " name="highlight" value="{{shopdata.highlight}}" >{{shopdata.highlight}}</textarea>
+  </div>
+  
+
+  <div class="mb-3" style="height:10%; width: 20%;">
+    <label for="exampleFormControlInput1" class="form-label"></label>
+    <img src="{% static 'images/postdefault.jpg' %}"  class="img-fluid" id="prev" alt="dp preview">
+
+  </div>
+
+  <!-- <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Content Related Image</label>
+    <input type="file" class="form-control" id="exampleFormControlInput1" placeholder="chooce image" name="image">
+  </div> -->
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Preview image</label>
+    <input type="file" class="form-control" id="exampleFormControlInput1" required placeholder="Chooce image" name="image" onchange="pre(event)">
+  </div>
+  
+
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Content</label>
+    <textarea type="tex" class="form-control" id="exampleFormControlInput1" required placeholder="Write Your Content" name="content" value="{{shopdata.about}}" >{{shopdata.about}}</textarea>
+  </div>
+  
+  
+  
+  <!-- {{context.value}} -->
+  
+  <div class="">
+    <!-- <button class="btn btn-primary" type="button">Button</button> -->
+    <button class="btn btn-outline-primary" type="submit">POST</button>
+    <!-- <a   class="btn btn-link" href="/profile">profile</a>
+    <a   class="btn btn-link" href="/">Home</a> -->
+
+  </div>
+</form>
+
+<br>
+<br>
+<br>
+
+
+<script type='text/javascript'>
+  function pre(event) 
+  {
+   var reader = new FileReader();
+   reader.onload = function()
+   {
+    var output = document.getElementById('prev');
+    output.src = reader.result;
+   }
+   reader.readAsDataURL(event.target.files[0]);
+  }
+  </script
+
+{% endblock main_body %}
